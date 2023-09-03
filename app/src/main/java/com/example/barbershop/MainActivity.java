@@ -156,8 +156,7 @@ public class MainActivity extends AppCompatActivity
             serverRequest.logOutFromAllDevices(this);
         };
         String title = "להתנתק מכל המכשירים?";
-        String msg = "לאחר ההתנתקות ישלח מייל עם קוד אימות";
-        AlertDialog.showAlertDialog(title,msg,doIfUserPressOk,this);
+        AlertDialog.showAlertDialog(title,"",doIfUserPressOk,this);
     }
 
     public void settingBtn(View view)
