@@ -65,7 +65,7 @@ public class Login
             DataHolderClass.userPhone = responseSplit[1];
             DataHolderClass.msg = responseSplit[2];
             DataHolderClass.userReservedQueue = responseSplit[3];
-            FirebaseMessaging.getInstance().subscribeToTopic(userMail.split("@")[0]);
+            FirebaseMessaging.getInstance().subscribeToTopic(userMail.substring(0,userMail.indexOf('@')));
             DataHolderClass.loginActivity.moveToMainActivity();
         }
     }

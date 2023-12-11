@@ -335,7 +335,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onComplete(Task<Void> task)
             {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(account.getEmail().split("@")[0]);
+                String userMail = account.getEmail();
+                String mailName = userMail.substring(0,userMail.indexOf('@'));
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(mailName);
                 Intent intent = new Intent(MainActivity.this,
                         LoginActivity.class);
                 finish();

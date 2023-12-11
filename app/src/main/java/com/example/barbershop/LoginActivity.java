@@ -260,7 +260,8 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
             @Override
             public void onComplete(Task<Void> task)
             {
-                FirebaseMessaging.getInstance().unsubscribeFromTopic(DataHolderClass.userMail.split("@")[0]);
+                String mailName = DataHolderClass.userMail.substring(0,DataHolderClass.userMail.indexOf('@'));
+                FirebaseMessaging.getInstance().unsubscribeFromTopic(mailName);
                 loadingView.setVisibility(View.GONE);
                 makeLoginBtnVisible();
             }
