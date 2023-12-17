@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -126,10 +127,13 @@ public class MainActivity extends AppCompatActivity
             serverRequest.removeUser(this);
         };
         String title = "למחוק את המשתמש?";
-        String msg = "";
-        if (DataHolderClass.userReservedQueue != null)
-            msg = "המחיקה כוללת את התור שלך";
-        AlertDialog.showAlertDialog(title,msg,doIfUserPressOk,this);
+        if (DataHolderClass.userReservedQueue.equals("no"))
+            AlertDialog.showAlertDialog(title,"",doIfUserPressOk,this);
+        else
+        {
+            String msg = "המחיקה כוללת את התור שלך";
+            AlertDialog.showAlertDialog(title,msg,doIfUserPressOk,this);
+        }
     }
 
 
