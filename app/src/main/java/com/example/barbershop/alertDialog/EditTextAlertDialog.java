@@ -25,7 +25,7 @@ public class EditTextAlertDialog
     private static EditTextAlertDialogInterface myInterface;
     private static String editTextContent;
 
-    public static void showAlertDialog(Action act, EditTextAlertDialogInterface editTextAlertDialogInterface, String putInEditText)
+    public static void showAlertDialog(Action act, EditTextAlertDialogInterface editTextAlertDialogInterface,String putInEditText)
     {
         editTextContent = putInEditText;
         action = act;
@@ -66,13 +66,11 @@ public class EditTextAlertDialog
             doButton.setOnClickListener((View v) ->
             {
                 editTextContent = editText.getText().toString();
-                if (myInterface.inputCheck(editTextContent) == false)
+                if (myInterface.inputCheck(editTextContent))
                 {
-                    Toast.makeText(DataHolderClass.mainActivity, "השדה ריק", Toast.LENGTH_SHORT).show();
-                    return;
+                    dismiss();
+                    myInterface.doIfUserPressOk(editTextContent);
                 }
-                dismiss();
-                myInterface.doIfUserPressOk(editTextContent);
             });
             builder.setView(view)
                     .setNegativeButton("ביטול", new DialogInterface.OnClickListener()

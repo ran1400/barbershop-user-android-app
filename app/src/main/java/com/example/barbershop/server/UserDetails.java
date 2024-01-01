@@ -52,7 +52,7 @@ public class UserDetails
         if (response.equals("V"))
         {
             DataHolderClass.userPhone = newPhone;
-            DataHolderClass.mainActivity.updatePhone();
+            DataHolderClass.mainActivity.updatePhoneTextView();
             Toast.makeText(DataHolderClass.mainActivity, "מספר הפלאפון שונה בהצלחה", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -60,7 +60,7 @@ public class UserDetails
             Toast.makeText(DataHolderClass.mainActivity, "בעיית הרשאות", Toast.LENGTH_SHORT).show();
         else // (response.equals("cmd failed") || response.equals("connection failed") || response.equals(ServerRequest.ERROR_RESPONSE))
             Toast.makeText(DataHolderClass.mainActivity, "בקשה לשרת נכשלה - נסה שוב", Toast.LENGTH_SHORT).show();
-        DataHolderClass.mainActivity.updatePhone(newPhone); // call again to the change phone alert dialog
+        DataHolderClass.mainActivity.updatePhoneBtn(newPhone); // call again to the change phone alert dialog
     }
 
     public static void updateNameAns(String response,String newName)
@@ -77,7 +77,7 @@ public class UserDetails
             Toast.makeText(DataHolderClass.mainActivity, "בעיית הרשאות", Toast.LENGTH_SHORT).show();
         else // (response.equals("cmd failed") || response.equals("connection failed") || response.equals(ServerRequest.ERROR_RESPONSE))
             Toast.makeText(DataHolderClass.mainActivity, "בקשה לשרת נכשלה - נסה שוב", Toast.LENGTH_SHORT).show();
-        DataHolderClass.mainActivity.updateName(newName); // call again to the change name alert dialog
+        DataHolderClass.mainActivity.updateNameBtn(newName); // call again to the change name alert dialog
     }
 
 }

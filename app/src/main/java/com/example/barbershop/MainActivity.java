@@ -4,11 +4,9 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -131,7 +129,7 @@ public class MainActivity extends AppCompatActivity
             AlertDialog.showAlertDialog(title,"",doIfUserPressOk,this);
         else
         {
-            String msg = "המחיקה כוללת את התור שלך";
+            String msg = "מחיקת החשבון תבטל את התור שלך";
             AlertDialog.showAlertDialog(title,msg,doIfUserPressOk,this);
         }
     }
@@ -174,14 +172,14 @@ public class MainActivity extends AppCompatActivity
             closeSetting();
         else
         {
-            updatePhone();
+            updatePhoneTextView();
             settingWindow.setVisibility(View.VISIBLE);
             closeSettingBtn.setVisibility(View.VISIBLE);
             mainLayout.setVisibility(View.INVISIBLE);
         }
     }
 
-    public void updatePhone()
+    public void updatePhoneTextView()
     {
         settingText.setText("מספר הפלאפון שלך הוא :\n\n" + DataHolderClass.userPhone);
     }
@@ -253,12 +251,12 @@ public class MainActivity extends AppCompatActivity
         serverRequest.getEmptyQueues(this); //continue at showChooseQueueFragment
     }
 
-    public void updateName(View view)
+    public void updateNameBtn(View view)
     {
-        updateName("");
+        updateNameBtn("");
     }
 
-    public void updateName(String putInEditText)
+    public void updateNameBtn(String putInEditText)
     {
         EditTextAlertDialogInterface editTextAlertDialogInterface = new EditTextAlertDialogInterface()
         {
@@ -276,7 +274,7 @@ public class MainActivity extends AppCompatActivity
             {
                 if (editTextContent.isEmpty())
                 {
-                    Toast.makeText(DataHolderClass.mainActivity, "השדה ריק", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataHolderClass.mainActivity, "הכנס שם", Toast.LENGTH_SHORT).show();
                     return false;
                 }
                 else if (editTextContent.contains("<") || editTextContent.contains("'"))
@@ -290,12 +288,12 @@ public class MainActivity extends AppCompatActivity
         EditTextAlertDialog.showAlertDialog(EditTextAlertDialog.Action.CHANGE_NAME,editTextAlertDialogInterface,putInEditText);
     }
 
-    public void updatePhone(View view)
+    public void updatePhoneBtn(View view)
     {
-        updatePhone("");
+        updatePhoneBtn("");
     }
 
-    public void updatePhone(String putInEditText)
+    public void updatePhoneBtn(String putInEditText)
     {
         EditTextAlertDialogInterface editTextAlertDialogInterface = new EditTextAlertDialogInterface()
         {
@@ -313,7 +311,7 @@ public class MainActivity extends AppCompatActivity
             {
                 if (editTextContent.isEmpty())
                 {
-                    Toast.makeText(DataHolderClass.mainActivity, "השדה ריק", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DataHolderClass.mainActivity, "הכנס מספר פלאפון", Toast.LENGTH_SHORT).show();
                     return false;
                 }
                 return true;
