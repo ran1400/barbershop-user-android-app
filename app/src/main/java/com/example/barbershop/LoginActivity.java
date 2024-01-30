@@ -1,8 +1,6 @@
 package com.example.barbershop;
 
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -10,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ProgressBar;
@@ -33,13 +32,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-public class LoginActivity extends AppCompatActivity implements  View.OnClickListener
+public class LoginActivity extends AppCompatActivity
 {
 
     public String userMail, idToken;
     public GoogleSignInAccount account;
     private GoogleSignInClient mGoogleSignInClient;
-    private static final int GOOGLE_LOGIN_REQUEST_CODE = 1000;
     private Intent toMainActivityIntent;
     private SignInButton googleLoginBtn;
     private ProgressBar loadingView;
@@ -49,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
         DataHolderClass.loginActivity = this;
         sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         if (checkIfFirstEnter())
@@ -59,10 +58,9 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
                 .requestIdToken(getString(R.string.server_client_id)).requestEmail().build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         account = GoogleSignIn.getLastSignedInAccount(this);
-        setContentView(R.layout.activity_login);//define views only after this line
         googleLoginBtn = findViewById(R.id.googleBtn);
+        googleLoginBtn.setOnClickListener((View) -> loginBtnFun());
         loadingView = findViewById(R.id.loading);
-        googleLoginBtn.setOnClickListener(this);
         if (account != null) // there are user sign in
              doIfHasLogInUser();
         else
@@ -162,11 +160,6 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         editor.commit();
     }
 
-    @Override
-    public void onClick(View view)
-    {
-        loginBtnFun(); //onclick listen only to loginBtn
-    }
 
     public void restart()
     {
@@ -185,13 +178,15 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
         finish();
     }
 
-    private void loginBtnFun() //move to googleLoginAns after user log in
+    private void loginBtnFun()  //move to googleLoginAns after user log in
     {
         loadingView.setVisibility(View.VISIBLE);
         googleLoginBtn.setEnabled(false);
+
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent,GOOGLE_LOGIN_REQUEST_CODE); //move to googleLoginAns
+        startActivityForResult(signInIntent,0); //move to googleLoginAns
     }
+
 
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
