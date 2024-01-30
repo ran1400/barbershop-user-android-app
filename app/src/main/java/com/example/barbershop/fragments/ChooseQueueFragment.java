@@ -1,10 +1,7 @@
 package com.example.barbershop.fragments;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +22,7 @@ import com.example.barbershop.sharedData.DataHolderClass;
 
 import java.util.LinkedList;
 
-@SuppressLint("ValidFragment")
+
 public class ChooseQueueFragment extends Fragment
 {
     private String selectedQueue;
