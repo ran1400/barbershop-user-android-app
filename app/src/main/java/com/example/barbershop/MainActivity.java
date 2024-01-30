@@ -357,20 +357,14 @@ public class MainActivity extends AppCompatActivity
     {
         if (DataHolderClass.chooseQueueFragment == null)
             DataHolderClass.chooseQueueFragment = new ChooseQueueFragment();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.chooseQueueFragment, DataHolderClass.chooseQueueFragment);
-        fragmentTransaction.commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.chooseQueueFragment,DataHolderClass.chooseQueueFragment).commit();
         mainLayout.setVisibility(View.GONE);
         chooseQueueLayout.setVisibility(View.VISIBLE);
     }
 
     public void backBtn()
     {
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.remove(DataHolderClass.chooseQueueFragment);
-        fragmentTransaction.commit();
+        getSupportFragmentManager().beginTransaction().remove(DataHolderClass.chooseQueueFragment).commit();
         chooseQueueLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
     }

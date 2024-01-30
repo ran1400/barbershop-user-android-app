@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        DataHolderClass.loginActivity = this; // important - first put in sharedDate the loginActivity
+        DataHolderClass.loginActivity = this;
         sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         if (checkIfFirstEnter())
             doOnFirstEnterToTheApp();
@@ -134,10 +134,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     public void showNoInternetFragment()
     {
         NoInternetFragment noInternetFragment = new NoInternetFragment();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentLayout,noInternetFragment);
-        fragmentTransaction.commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,noInternetFragment).commit();
     }
 
     private boolean checkIfFirstEnter()
@@ -272,10 +269,7 @@ public class LoginActivity extends AppCompatActivity implements  View.OnClickLis
     {
         googleLoginBtn.setEnabled(false);
         FirstLoginFragment loginFragment = new FirstLoginFragment();
-        FragmentManager fm = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fm.beginTransaction();
-        fragmentTransaction.replace(R.id.fragmentLayout, loginFragment);
-        fragmentTransaction.commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,loginFragment).commit();
     }
 
 }
