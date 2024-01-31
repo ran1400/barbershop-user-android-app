@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity
         DataHolderClass.loginActivity = this;
         sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         if (checkIfFirstEnter())
-            doOnFirstEnterToTheApp();
+            createNotificationChannels();
         toMainActivityIntent = new Intent(LoginActivity.this,
                 MainActivity.class);
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -85,11 +85,6 @@ public class LoginActivity extends AppCompatActivity
             restart();
     }
 
-    private void doOnFirstEnterToTheApp()
-    {
-        createNotificationChannels();
-        FirebaseMessaging.getInstance().subscribeToTopic("managerMsgs");
-    }
 
     private void createNotificationChannels()
     {
@@ -171,7 +166,7 @@ public class LoginActivity extends AppCompatActivity
         finish();
     }
 
-    public void restartWithoutSignOut() // for use of first login fragment or send mail fragment
+    public void restartWithoutSignOut() // for use of no internet fragment
     {
         Intent intent = new Intent(LoginActivity.this,
                 LoginActivity.class);
@@ -183,7 +178,6 @@ public class LoginActivity extends AppCompatActivity
     {
         loadingView.setVisibility(View.VISIBLE);
         googleLoginBtn.setEnabled(false);
-
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent,0); //move to googleLoginAns
     }
@@ -255,6 +249,7 @@ public class LoginActivity extends AppCompatActivity
             {
                 String mailName = userMail.substring(0,userMail.indexOf('@'));
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(mailName);
+                FirebaseMessaging.getInstance().subscribeToTopic("managerMsgs");
                 loadingView.setVisibility(View.GONE);
                 makeLoginBtnVisible();
             }

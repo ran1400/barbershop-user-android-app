@@ -335,6 +335,7 @@ public class MainActivity extends AppCompatActivity
                 String userMail = account.getEmail();
                 String mailName = userMail.substring(0,userMail.indexOf('@'));
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(mailName);
+                FirebaseMessaging.getInstance().unsubscribeFromTopic("managerMsgs");
                 Intent intent = new Intent(MainActivity.this,
                         LoginActivity.class);
                 finish();
