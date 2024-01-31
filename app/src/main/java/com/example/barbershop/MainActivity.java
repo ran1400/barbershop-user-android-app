@@ -1,9 +1,8 @@
 package com.example.barbershop;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -53,6 +52,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Log.d("activityCheck","main");
         if (DataHolderClass.userName == null)
             refresh();
         setContentView(R.layout.activity_main);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity
         closeSettingBtn = findViewById(R.id.closeSettingBtn);
         changeActivityTitle();
         inAppMsgHandle();
-        showUserQueueHandel();
+        showUserQueueHandel(); //show the queue the user handle (if have)
     }
 
     public void doBeforeServerRequest()
@@ -93,11 +93,6 @@ public class MainActivity extends AppCompatActivity
         {
             mainText.setText("אין לך תור");
             addQueueBtn.setVisibility(View.VISIBLE);
-        }
-        else if (DataHolderClass.userReservedQueue.equals("block user"))
-        {
-            String alertDialogTitle = "המשתמש נחסם על ידי המנהל\n";
-            AlertDialog.showAlertDialog(alertDialogTitle,this);
         }
         else
         {

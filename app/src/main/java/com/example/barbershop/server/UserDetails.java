@@ -54,13 +54,17 @@ public class UserDetails
             DataHolderClass.userPhone = newPhone;
             DataHolderClass.mainActivity.updatePhoneTextView();
             Toast.makeText(DataHolderClass.mainActivity, "מספר הפלאפון שונה בהצלחה", Toast.LENGTH_SHORT).show();
-            return;
         }
         else if (response.equals("permission problem"))
+        {
             Toast.makeText(DataHolderClass.mainActivity, "בעיית הרשאות", Toast.LENGTH_SHORT).show();
+            DataHolderClass.mainActivity.refresh();
+        }
         else // (response.equals("cmd failed") || response.equals("connection failed") || response.equals(ServerRequest.ERROR_RESPONSE))
+        {
             Toast.makeText(DataHolderClass.mainActivity, "בקשה לשרת נכשלה - נסה שוב", Toast.LENGTH_SHORT).show();
-        DataHolderClass.mainActivity.updatePhoneBtn(newPhone); // call again to the change phone alert dialog
+            DataHolderClass.mainActivity.updatePhoneBtn(newPhone); // call again to the change phone alert dialog
+        }
     }
 
     public static void updateNameAns(String response,String newName)
@@ -71,13 +75,18 @@ public class UserDetails
             DataHolderClass.userName = newName;
             DataHolderClass.mainActivity.changeActivityTitle();
             Toast.makeText(DataHolderClass.mainActivity,"השם שונה בהצלחה" , Toast.LENGTH_SHORT).show();
-            return;
         }
         else if (response.equals("permission problem"))
+        {
             Toast.makeText(DataHolderClass.mainActivity, "בעיית הרשאות", Toast.LENGTH_SHORT).show();
+            DataHolderClass.mainActivity.refresh();
+        }
+
         else // (response.equals("cmd failed") || response.equals("connection failed") || response.equals(ServerRequest.ERROR_RESPONSE))
+        {
             Toast.makeText(DataHolderClass.mainActivity, "בקשה לשרת נכשלה - נסה שוב", Toast.LENGTH_SHORT).show();
-        DataHolderClass.mainActivity.updateNameBtn(newName); // call again to the change name alert dialog
+            DataHolderClass.mainActivity.updateNameBtn(newName); // call again to the change name alert dialog
+        }
     }
 
 }

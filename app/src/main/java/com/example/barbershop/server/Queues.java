@@ -24,7 +24,10 @@ public class Queues
         else if (response.equals("managerBlockSystem"))
             Toast.makeText(DataHolderClass.mainActivity, "המנהל חסם את ההאופציה לקביעת תורים - נסה מאוחר יותר", Toast.LENGTH_SHORT).show();
         else if (response.equals("permission problem"))
+        {
             Toast.makeText(DataHolderClass.mainActivity, "בעיית הרשאות", Toast.LENGTH_SHORT).show();
+            DataHolderClass.mainActivity.signOut();
+        }
         else // ( response.equals("connection failed") || response.equals(ServerRequest.ERROR_RESPONSE))
             Toast.makeText(DataHolderClass.mainActivity, "התחברות לשרת נכשלה", Toast.LENGTH_SHORT).show();
     }
@@ -45,7 +48,10 @@ public class Queues
         else if (response.equals("managerBlockSystem"))
             Toast.makeText(DataHolderClass.mainActivity, "המנהל חסם את ההאופציה לקביעת תורים - נסה מאוחר יותר", Toast.LENGTH_SHORT).show();
         else if (response.equals("permission problem"))
+        {
             Toast.makeText(DataHolderClass.mainActivity, "בעיית הרשאות", Toast.LENGTH_SHORT).show();
+            DataHolderClass.mainActivity.signOut();
+        }
         else // ( response.equals("connection failed") || response.equals(ServerRequest.ERROR_RESPONSE))
             Toast.makeText(DataHolderClass.mainActivity, "התחברות לשרת נכשלה", Toast.LENGTH_SHORT).show();
     }
@@ -64,7 +70,10 @@ public class Queues
             DataHolderClass.mainActivity.refresh();
         }
         else if (response.equals("permission problem"))
+        {
+            DataHolderClass.mainActivity.signOut();
             Toast.makeText(DataHolderClass.mainActivity, "בעיית הרשאות", Toast.LENGTH_SHORT).show();
+        }
         else // ( response.equals("connection failed") || response.equals(ServerRequest.ERROR_RESPONSE))
             Toast.makeText(DataHolderClass.mainActivity, "התחברות לשרת נכשלה", Toast.LENGTH_SHORT).show();
     }

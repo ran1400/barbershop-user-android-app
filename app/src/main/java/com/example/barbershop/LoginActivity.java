@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        Log.d("activityCheck","login");
         setContentView(R.layout.activity_login);
         DataHolderClass.loginActivity = this;
         sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
@@ -252,7 +253,7 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onComplete(Task<Void> task)
             {
-                String mailName = DataHolderClass.userMail.substring(0,DataHolderClass.userMail.indexOf('@'));
+                String mailName = userMail.substring(0,userMail.indexOf('@'));
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(mailName);
                 loadingView.setVisibility(View.GONE);
                 makeLoginBtnVisible();

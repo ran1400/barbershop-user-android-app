@@ -14,11 +14,12 @@ public class AlertDialog
         alertDialog.show();
     }
 
+    /* if i need - alert dialog only for show msg without action
     public static void showAlertDialog(String title, Context context)
     {
         android.app.AlertDialog.Builder alertDialog = new android.app.AlertDialog.Builder(context);
         alertDialog.setTitle(title);
         alertDialog.show();
-    }
+    }*/
 
 }
