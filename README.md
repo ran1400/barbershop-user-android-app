@@ -20,11 +20,4 @@ with the app he can :
 
 -delete his account
 
-and decide which notifications he get :
-
--the manager has add him queue,change or cancel it 
-
--messages from the manager
-
--block or remove of his account by the manager 
 
