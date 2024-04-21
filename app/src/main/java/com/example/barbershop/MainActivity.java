@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.d("activityCheck","main");
         if (DataHolderClass.userName == null)
             refresh();
         setContentView(R.layout.activity_main);
