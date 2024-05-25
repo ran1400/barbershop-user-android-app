@@ -47,7 +47,6 @@ public class LoginActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        Log.d("activityCheck","login");
         setContentView(R.layout.activity_login);
         DataHolderClass.loginActivity = this;
         sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
