@@ -25,7 +25,6 @@ public class ServerRequest
         this.responseHandle = responseHandle;
     }
 
-
     public void firstLogin(String name,String phone,String idToken,Context context)
     {
         url = "https://ran-yehezkel.online/barbershop/commands/user/add_new_user.php";

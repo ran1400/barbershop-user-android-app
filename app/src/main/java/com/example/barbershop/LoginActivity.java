@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -35,7 +36,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 public class LoginActivity extends AppCompatActivity
 {
 
-    public String userMail, idToken;
+    public String userMail,idToken;
     public GoogleSignInAccount account;
     private GoogleSignInClient mGoogleSignInClient;
     private Intent toMainActivityIntent;
@@ -85,21 +86,20 @@ public class LoginActivity extends AppCompatActivity
     }
 
 
+
     private void createNotificationChannels()
     {
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-        {
-            NotificationChannel channel;
-            channel = new NotificationChannel("queuesUpdates", "שינוי תורים על ידי המנהל", NotificationManager.IMPORTANCE_DEFAULT);
-            manager.createNotificationChannel(channel);
-            channel = new NotificationChannel("quietManagerMsg", "הודעות מהמנהל - ללא צליל", NotificationManager.IMPORTANCE_LOW);
-            manager.createNotificationChannel(channel);
-            channel = new NotificationChannel("managerMsg", "הודעות מהמנהל", NotificationManager.IMPORTANCE_DEFAULT);
-            manager.createNotificationChannel(channel);
-            channel = new NotificationChannel("other", "חסימות ומחיקות חשבון", NotificationManager.IMPORTANCE_DEFAULT);
-            manager.createNotificationChannel(channel);
-        }
+        NotificationChannel channel;
+        channel = new NotificationChannel("queuesUpdates", "שינוי תורים על ידי המנהל", NotificationManager.IMPORTANCE_DEFAULT);
+        manager.createNotificationChannel(channel);
+        channel = new NotificationChannel("quietManagerMsg", "הודעות מהמנהל - ללא צליל", NotificationManager.IMPORTANCE_LOW);
+        manager.createNotificationChannel(channel);
+        channel = new NotificationChannel("managerMsg", "הודעות מהמנהל", NotificationManager.IMPORTANCE_DEFAULT);
+        manager.createNotificationChannel(channel);
+        channel = new NotificationChannel("other", "חסימות ומחיקות חשבון", NotificationManager.IMPORTANCE_DEFAULT);
+        manager.createNotificationChannel(channel);
+
     }
 
     public void doBeforeServerRequest()
