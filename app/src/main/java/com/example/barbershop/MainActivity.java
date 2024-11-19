@@ -2,7 +2,6 @@ package com.example.barbershop;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -69,7 +68,7 @@ public class MainActivity extends AppCompatActivity
         settingText = findViewById(R.id.settingTextView);
         settingWindow = findViewById(R.id.settingWindow);
         closeSettingBtn = findViewById(R.id.closeSettingBtn);
-        changeActivityTitle();
+        changeActivityTitleToDefault();
         inAppMsgHandle();
         showUserQueueHandel(); //show the queue the user handle (if have)
     }
@@ -109,6 +108,12 @@ public class MainActivity extends AppCompatActivity
             msgText.setText("\n\n" + DataHolderClass.msg + "\n\n");
     }
 
+    public void changeActivityTitle(String title)
+    {
+        getSupportActionBar().setTitle(title);
+    }
+
+
     public void removeUserBtn(View view)
     {
         SimpleMethod doIfUserPressOk = () ->
@@ -140,6 +145,7 @@ public class MainActivity extends AppCompatActivity
         closeSettingBtn.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
         chooseQueueLayout.setVisibility(View.GONE);
+        changeActivityTitleToDefault();
     }
 
     public void logOutFromAllDevices(View view)
@@ -170,6 +176,7 @@ public class MainActivity extends AppCompatActivity
             settingWindow.setVisibility(View.VISIBLE);
             closeSettingBtn.setVisibility(View.VISIBLE);
             mainLayout.setVisibility(View.INVISIBLE);
+            changeActivityTitle("הגדרות");
         }
     }
 
@@ -343,9 +350,9 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    public void changeActivityTitle()
+    public void changeActivityTitleToDefault()
     {
-        getSupportActionBar().setTitle("שלום " + DataHolderClass.userName);
+        changeActivityTitle("שלום " + DataHolderClass.userName);
     }
 
     public void showChooseQueueFragment()
@@ -355,13 +362,18 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.chooseQueueFragment,DataHolderClass.chooseQueueFragment).commit();
         mainLayout.setVisibility(View.GONE);
         chooseQueueLayout.setVisibility(View.VISIBLE);
+        if (updateOrAddQueueCmd == DataHolderClass.Action.UPDATE_QUEUE)
+            changeActivityTitle("עדכון תור");
+        else // (updateOrAddQueueCmd == DataHolderClass.Action.ADD_QUEUE)
+            changeActivityTitle("קביעת תור");
     }
 
-    public void backBtn()
+    public void backBtn() // btn in choose queue fragment
     {
         getSupportFragmentManager().beginTransaction().remove(DataHolderClass.chooseQueueFragment).commit();
         chooseQueueLayout.setVisibility(View.GONE);
         mainLayout.setVisibility(View.VISIBLE);
+        changeActivityTitleToDefault();
     }
 
 

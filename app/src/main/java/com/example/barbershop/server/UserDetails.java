@@ -73,7 +73,7 @@ public class UserDetails
         if(response.equals("V"))
         {
             DataHolderClass.userName = newName;
-            DataHolderClass.mainActivity.changeActivityTitle();
+            DataHolderClass.mainActivity.changeActivityTitleToDefault();
             Toast.makeText(DataHolderClass.mainActivity,"השם שונה בהצלחה" , Toast.LENGTH_SHORT).show();
         }
         else if (response.equals("permission problem"))
