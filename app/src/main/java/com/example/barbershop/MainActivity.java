@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity
     private ImageButton closeSettingBtn;
     private View chooseQueueLayout,settingWindow,msgWindows,mainLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {

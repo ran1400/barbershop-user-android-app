@@ -7,7 +7,6 @@ import java.util.LinkedList;
 
 public class Queues
 {
-
     public static void addQueueAns(String response)
     {
         DataHolderClass.mainActivity.doWhenServerResponse();
@@ -94,7 +93,6 @@ public class Queues
             getEmptyQueuesAns_helper(response);
     }
 
-
     private static void getEmptyQueuesAns_helper(String response)
     {
         int responseLength = response.length();
@@ -123,5 +121,4 @@ public class Queues
         DataHolderClass.emptyQueuesDates = dates;
         DataHolderClass.mainActivity.showChooseQueueFragment();
     }
-
 }
