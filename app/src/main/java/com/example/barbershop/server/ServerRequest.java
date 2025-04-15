@@ -2,6 +2,8 @@ package com.example.barbershop.server;
 
 
 import android.content.Context;
+import android.util.Log;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,19 +27,13 @@ public class ServerRequest
         this.responseHandle = responseHandle;
     }
 
-    public void firstLogin(String name,String phone,String idToken,Context context)
+    public void firstLogin(String name,String phone,String idToken,String mail,Context context)
     {
         url += "user/add_new_user.php";
         map.put("name",name);
         map.put("phone",phone);
+        map.put("userMail",mail);
         map.put("idToken",idToken);
-        sendRequest(context);
-    }
-
-    public void checkIfNewUser(String userMail,Context context)
-    {
-        url += "user/check_if_new_user.php";
-        map.put("userMail",userMail);
         sendRequest(context);
     }
 
@@ -49,10 +45,11 @@ public class ServerRequest
         sendRequest(context);
     }
 
-    public void checkGoogleLogIn(String idToken, Context context)
+    public void checkGoogleLogin(String idToken,String userMail,Context context)
     {
         url += "user/check_google_login.php";
         map.put("idToken",idToken);
+        map.put("userMail",userMail);
         sendRequest(context);
     }
 
@@ -62,7 +59,7 @@ public class ServerRequest
         map.put("userMail",DataHolderClass.userMail);
         map.put("userName", DataHolderClass.userName);
         map.put("secretKey",DataHolderClass.userSecretKey);
-        map.put("date",DataHolderClass.userReservedQueue);
+        map.put("time",DataHolderClass.userReservedQueue);
         sendRequest(context);
     }
 
@@ -132,12 +129,14 @@ public class ServerRequest
 
     private void sendRequest(Context context)
     {
+        Log.d("sendHttpRequest",url + " " + map);
         StringRequest sr = new StringRequest(1, url,
                 new Response.Listener<String>()
                 {
                     @Override
                     public void onResponse(String response)
                     {
+                        Log.d("sendHttpRequest","response : " + response);
                         responseHandle.doWhenGetResponseFromTheServer(response);
                     }
                 }, new Response.ErrorListener()
@@ -146,6 +145,7 @@ public class ServerRequest
             public void onErrorResponse(VolleyError error)
             {
                 responseHandle.doWhenGetResponseFromTheServer(ServerRequest.ERROR_RESPONSE);
+                Log.d("sendHttpRequest","response : " + ERROR_RESPONSE);
             }
         })
         {

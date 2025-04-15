@@ -6,7 +6,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,12 +14,10 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.example.barbershop.fragments.FirstLoginFragment;
-import com.example.barbershop.fragments.NoInternetFragment;
 import com.example.barbershop.server.Login;
 import com.example.barbershop.server.ServerRequest;
 import com.example.barbershop.sharedData.DataHolderClass;
@@ -33,6 +31,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.security.PublicKey;
+
 public class LoginActivity extends AppCompatActivity
 {
 
@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity
     private SignInButton googleLoginBtn;
     private ProgressBar loadingView;
     private SharedPreferences sharedPreferences;
+    private FirstLoginFragment firstLoginFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,11 +79,14 @@ public class LoginActivity extends AppCompatActivity
         if (DataHolderClass.userSecretKey != null)
         {
             doBeforeServerRequest();
-            ServerRequest serverRequest = new ServerRequest((String response)->Login.getUserDetailsAns(response,userMail));
+            ServerRequest serverRequest = new ServerRequest((String response)->Login.getUserDetailsAns(response));
             serverRequest.getUserDetails(userMail,DataHolderClass.userSecretKey, DataHolderClass.loginActivity);
         }
         else
-            restart();
+        {
+            signOut();
+            makeLoginBtnVisible();
+        }
     }
 
 
@@ -122,12 +126,14 @@ public class LoginActivity extends AppCompatActivity
     public void makeLoginBtnInvisible()
     {
         googleLoginBtn.setVisibility(View.GONE);
-
     }
-    public void showNoInternetFragment()
+
+
+    public void dismissFirstLoginFragment()
     {
-        NoInternetFragment noInternetFragment = new NoInternetFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,noInternetFragment).commit();
+        getSupportFragmentManager().beginTransaction()
+                .remove(firstLoginFragment)
+                .commit();
     }
 
     private boolean checkIfFirstEnter()
@@ -156,23 +162,6 @@ public class LoginActivity extends AppCompatActivity
     }
 
 
-    public void restart()
-    {
-        signOut();
-        Intent intent = new Intent(LoginActivity.this,
-                LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
-    public void restartWithoutSignOut() // for use of no internet fragment
-    {
-        Intent intent = new Intent(LoginActivity.this,
-                LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-
     private void loginBtnFun()  //move to googleLoginAns after user log in
     {
         loadingView.setVisibility(View.VISIBLE);
@@ -182,7 +171,7 @@ public class LoginActivity extends AppCompatActivity
     }
 
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    public void onActivityResult(int requestCode, int resultCode, Intent data) // move to googleLoginAns
     {
         super.onActivityResult(requestCode, resultCode, data);
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
@@ -221,14 +210,14 @@ public class LoginActivity extends AppCompatActivity
         {
             DataHolderClass.userSecretKey = secretKey;
             doBeforeServerRequest();
-            ServerRequest serverRequest = new ServerRequest((String response) -> Login.getUserDetailsAns(response,userMail));
+            ServerRequest serverRequest = new ServerRequest((String response) -> Login.getUserDetailsAns(response));
             serverRequest.getUserDetails(userMail, secretKey, DataHolderClass.loginActivity);
         }
-        else
+        else //secretKey is null,optional new user
         {
             doBeforeServerRequest();
-            ServerRequest serverRequest = new ServerRequest((String response)-> Login.checkIfNewUserAns(response));
-            serverRequest.checkIfNewUser(userMail,DataHolderClass.loginActivity);
+            ServerRequest serverRequest = new ServerRequest((String response)-> Login.checkGoogleLogin(response));
+            serverRequest.checkGoogleLogin(idToken,userMail,DataHolderClass.loginActivity);
         }
     }
 
@@ -239,27 +228,26 @@ public class LoginActivity extends AppCompatActivity
         finish();
     }
 
-    private void signOut()
+    public void signOut()
     {
         mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>()
         {
             @Override
             public void onComplete(Task<Void> task)
             {
+                writeKeyToMemory(null);
                 String mailName = userMail.substring(0,userMail.indexOf('@'));
                 FirebaseMessaging.getInstance().unsubscribeFromTopic(mailName);
                 FirebaseMessaging.getInstance().subscribeToTopic("managerMsgs");
-                loadingView.setVisibility(View.GONE);
-                makeLoginBtnVisible();
             }
         });
     }
 
     public void firstLogin()
     {
-        googleLoginBtn.setEnabled(false);
-        FirstLoginFragment loginFragment = new FirstLoginFragment();
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,loginFragment).commit();
+        googleLoginBtn.setVisibility(View.INVISIBLE);
+        firstLoginFragment = new FirstLoginFragment();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragmentLayout,firstLoginFragment).commit();
     }
 
 }

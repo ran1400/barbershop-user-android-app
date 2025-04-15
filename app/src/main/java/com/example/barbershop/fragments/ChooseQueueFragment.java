@@ -117,7 +117,7 @@ public class ChooseQueueFragment extends Fragment
     public void okBtn(View view)
     {
 
-        selectedQueue = selectedDay  + selectedHours.get((int)selectedHour);
+        selectedQueue = selectedDay + " " + selectedHours.get((int)selectedHour);
         if (DataHolderClass.mainActivity.updateOrAddQueueCmd  == DataHolderClass.Action.ADD_QUEUE)
         {
             SimpleMethod doIfUserPressOk = () ->
@@ -146,7 +146,7 @@ public class ChooseQueueFragment extends Fragment
 
     public void backBtn(View view)
     {
-        DataHolderClass.mainActivity.backBtn();
+        DataHolderClass.mainActivity.closeChooseQueueWindows();
     }
 
 

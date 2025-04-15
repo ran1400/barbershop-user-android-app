@@ -23,7 +23,6 @@ public class FirstLoginFragment extends Fragment implements View.OnClickListener
     private EditText userNameEditText ;
     private EditText phoneEditText;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater,ViewGroup container, Bundle savedInstanceState)
@@ -57,7 +56,8 @@ public class FirstLoginFragment extends Fragment implements View.OnClickListener
 
     private void backBtn()
     {
-        DataHolderClass.loginActivity.restart();
+        DataHolderClass.loginActivity.dismissFirstLoginFragment();
+        DataHolderClass.loginActivity.makeLoginBtnVisible();
     }
 
     private void okBtn()
@@ -74,7 +74,7 @@ public class FirstLoginFragment extends Fragment implements View.OnClickListener
         {
             DataHolderClass.loginActivity.doBeforeServerRequest();
             ServerRequest serverRequest = new ServerRequest((String response) -> Login.firstLoginAns(response,DataHolderClass.loginActivity.userMail));
-            serverRequest.firstLogin(userName,phone,DataHolderClass.loginActivity.idToken,DataHolderClass.loginActivity);
+            serverRequest.firstLogin(userName,phone,DataHolderClass.loginActivity.idToken,DataHolderClass.loginActivity.userMail,DataHolderClass.loginActivity);
         }
     }
 

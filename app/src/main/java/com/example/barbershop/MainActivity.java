@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        if (DataHolderClass.userName == null)
+        if (DataHolderClass.userName == null) // there is no connected user
             refresh();
         setContentView(R.layout.activity_main);
         DataHolderClass.mainActivity = this;
@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity
         settingWindow = findViewById(R.id.settingWindow);
         closeSettingBtn = findViewById(R.id.closeSettingBtn);
         changeActivityTitleToDefault();
-        inAppMsgHandle();
-        showUserQueueHandel(); //show the queue the user handle (if have)
+        inAppMsgHandle(); //show msg from the manager if have
+        showUserQueueHandel(); //show the queue to the user handle
     }
 
     public void doBeforeServerRequest()
@@ -84,18 +84,21 @@ public class MainActivity extends AppCompatActivity
         loadingView.setVisibility(View.GONE);
     }
 
-    private void showUserQueueHandel()
+    public void showUserQueueHandel()
     {
-        if (DataHolderClass.userReservedQueue.equals("no"))
+        if (DataHolderClass.userReservedQueue == null)
         {
             mainText.setText("אין לך תור");
             addQueueBtn.setVisibility(View.VISIBLE);
+            deleteQueueBtn.setVisibility(View.INVISIBLE);
+            updateQueueBtn.setVisibility(View.INVISIBLE);
         }
         else
         {
             mainText.setText( "יש לך תור :" + "\n\n" + makeDateView(DataHolderClass.userReservedQueue));
             deleteQueueBtn.setVisibility(View.VISIBLE);
             updateQueueBtn.setVisibility(View.VISIBLE);
+            addQueueBtn.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -123,7 +126,7 @@ public class MainActivity extends AppCompatActivity
             serverRequest.removeUser(this);
         };
         String title = "למחוק את המשתמש?";
-        if (DataHolderClass.userReservedQueue.equals("no"))
+        if (DataHolderClass.userReservedQueue == null)
             AlertDialog.showAlertDialog(title,"",doIfUserPressOk,this);
         else
         {
@@ -367,7 +370,7 @@ public class MainActivity extends AppCompatActivity
             changeActivityTitle("קביעת תור");
     }
 
-    public void backBtn() // btn in choose queue fragment
+    public void closeChooseQueueWindows() // btn in choose queue fragment
     {
         getSupportFragmentManager().beginTransaction().remove(DataHolderClass.chooseQueueFragment).commit();
         chooseQueueLayout.setVisibility(View.GONE);
