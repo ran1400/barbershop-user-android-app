@@ -1,25 +1,19 @@
-app screenshot : https://ran-y.me/barbershop-screenshots
+App screenshot : https://ran-y.me/barbershop-screenshots
 
-the user sign in to the app by using his google account
+The user sign in to the app by using his google account, in first sign in he need to enter name and phone number.
 
-in first sign in he need to enter his name and phone number.
+With the app he can :
 
-with the app he can :
+-Get queue
 
--get queue
+-Cancel his queue
 
--cancel his queue
+-Change his queue
 
--change his queue
+-Change his name or phone namber
 
--change name 
+-Log out 
 
--change phone number
+-Log out from all the devices
 
--log out 
-
--log out from all the devices
-
--delete his account
-
-
+-Delete his account
