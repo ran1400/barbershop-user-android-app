@@ -331,7 +331,8 @@ public class MainActivity extends AppCompatActivity
     {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).build();
         GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-        mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>() {
+        mGoogleSignInClient.signOut().addOnCompleteListener(new OnCompleteListener<Void>()
+        {
             @Override
             public void onComplete(Task<Void> task)
             {

@@ -17,6 +17,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import androidx.security.crypto.EncryptedSharedPreferences;
+import androidx.security.crypto.MasterKey;
+
 import com.example.barbershop.fragments.FirstLoginFragment;
 import com.example.barbershop.server.Login;
 import com.example.barbershop.server.ServerRequest;
@@ -31,7 +34,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.security.PublicKey;
+
 
 public class LoginActivity extends AppCompatActivity
 {
@@ -151,14 +154,49 @@ public class LoginActivity extends AppCompatActivity
 
     public String getKeyFromMemory()
     {
-        return sharedPreferences.getString("secretKey",null); //null is if userId not exist
+        try
+        {
+            MasterKey masterKey = new MasterKey.Builder(this)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build();
+
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(
+                    this,
+                    "secure_prefs",
+                    masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            );
+
+            return sharedPreferences.getString("secretKey", null);
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public void writeKeyToMemory(String secretKey)
     {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("secretKey",secretKey);
-        editor.commit();
+        try
+        {
+            MasterKey masterKey = new MasterKey.Builder(this)
+                    .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+                    .build();
+
+            SharedPreferences sharedPreferences = EncryptedSharedPreferences.create(
+                    this,
+                    "secure_prefs",
+                    masterKey,
+                    EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+                    EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+            );
+
+            sharedPreferences.edit().putString("secretKey",secretKey).apply();
+
+        } catch (Exception e) {e.printStackTrace();}
     }
 
 
