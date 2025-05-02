@@ -1,0 +1,4 @@
+# Project exclude paths
+/.gradle/
+/app/src/main/res/values/secret_keys.xml
+/app/src/main/google-services.json
