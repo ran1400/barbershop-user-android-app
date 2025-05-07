@@ -1,12 +1,14 @@
 package com.example.barbershop;
 
 
+import android.Manifest;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
@@ -45,7 +49,6 @@ public class LoginActivity extends AppCompatActivity
     private Intent toMainActivityIntent;
     private SignInButton googleLoginBtn;
     private ProgressBar loadingView;
-    private SharedPreferences sharedPreferences;
     private FirstLoginFragment firstLoginFragment;
 
     @Override
@@ -54,7 +57,6 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         DataHolderClass.loginActivity = this;
-        sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         if (checkIfFirstEnter())
             createNotificationChannels();
         toMainActivityIntent = new Intent(LoginActivity.this,
@@ -96,6 +98,8 @@ public class LoginActivity extends AppCompatActivity
 
     private void createNotificationChannels()
     {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         NotificationChannel channel;
         channel = new NotificationChannel("queuesUpdates", "שינוי תורים על ידי המנהל", NotificationManager.IMPORTANCE_DEFAULT);
@@ -104,9 +108,8 @@ public class LoginActivity extends AppCompatActivity
         manager.createNotificationChannel(channel);
         channel = new NotificationChannel("managerMsg", "הודעות מהמנהל", NotificationManager.IMPORTANCE_DEFAULT);
         manager.createNotificationChannel(channel);
-        channel = new NotificationChannel("other", "חסימות ומחיקות חשבון", NotificationManager.IMPORTANCE_DEFAULT);
+        channel = new NotificationChannel("other", "מחיקות וחסימות חשבון", NotificationManager.IMPORTANCE_DEFAULT);
         manager.createNotificationChannel(channel);
-
     }
 
     public void doBeforeServerRequest()
@@ -126,11 +129,6 @@ public class LoginActivity extends AppCompatActivity
         googleLoginBtn.setVisibility(View.VISIBLE);
         googleLoginBtn.setEnabled(true);
     }
-    public void makeLoginBtnInvisible()
-    {
-        googleLoginBtn.setVisibility(View.GONE);
-    }
-
 
     public void dismissFirstLoginFragment()
     {
@@ -141,6 +139,7 @@ public class LoginActivity extends AppCompatActivity
 
     private boolean checkIfFirstEnter()
     {
+        SharedPreferences sharedPreferences = getSharedPreferences("userInfo", Context.MODE_PRIVATE);
         if (sharedPreferences.getBoolean("firstEnter",true))
         {
             SharedPreferences.Editor editor = sharedPreferences.edit();

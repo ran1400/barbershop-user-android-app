@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
@@ -24,48 +23,35 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
 
         String title = null;
         String body = null;
+        String channelId;
 
-        // Handle Notification Payload
-        if (remoteMessage.getNotification() != null) {
+        if (remoteMessage.getNotification() != null)
+        {
             title = remoteMessage.getNotification().getTitle();
             body = remoteMessage.getNotification().getBody();
         }
 
-        // Handle Data Payload
-        if (remoteMessage.getData().size() > 0) {
-            if (title == null) { // Fallback to data payload if notification title is missing
-                title = remoteMessage.getData().get("title");
-            }
-            if (body == null) { // Fallback to data payload if notification body is missing
-                body = remoteMessage.getData().get("body");
-            }
-        }
-
-        // Show the Notification if there's a title or body
-        if (title != null && body != null) {
-            showNotification(title, body);
-        } else {
+        channelId = remoteMessage.getData().get("channel_id");
+        if (title != null && body != null && channelId != null)
+            showNotification(title,body,channelId);
+        else
             Log.d("FCM", "Message received but no title or body to display.");
-        }
+
     }
 
-    private void showNotification(String title, String body)
+    private void showNotification(String title, String body,String channelId)
     {
-        // Notification Channel ID
-        String channelId = "default_channel_id";
-
-        // Create the Notification Manager
         NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        // For Android 8.0+ (Oreo and above), create the Notification Channel if needed
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(
+        NotificationChannel channel = manager.getNotificationChannel(channelId);
+        if (channel == null)
+        {
+            channel = new NotificationChannel(
                     channelId,
                     "Default Channel",
-                    NotificationManager.IMPORTANCE_HIGH
-            );
+                    NotificationManager.IMPORTANCE_HIGH);
             manager.createNotificationChannel(channel);
         }
+
 
         // Intent for Notification Click
         Intent intent = new Intent(this, MainActivity.class);
@@ -86,8 +72,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService
                 .setAutoCancel(true)
                 .setContentIntent(pendingIntent);
 
-        manager.notify(0, builder.build());
+        manager.notify((int) System.currentTimeMillis(), builder.build());
     }
-
-
 }
