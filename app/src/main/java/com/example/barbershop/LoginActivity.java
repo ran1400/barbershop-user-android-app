@@ -102,13 +102,13 @@ public class LoginActivity extends AppCompatActivity
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
         NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
         NotificationChannel channel;
-        channel = new NotificationChannel("queuesUpdates", "שינוי תורים על ידי המנהל", NotificationManager.IMPORTANCE_DEFAULT);
+        channel = new NotificationChannel("queuesUpdates","שינוי תורים על ידי המנהל", NotificationManager.IMPORTANCE_DEFAULT);
         manager.createNotificationChannel(channel);
-        channel = new NotificationChannel("quietManagerMsg", "הודעות מהמנהל - ללא צליל", NotificationManager.IMPORTANCE_LOW);
+        channel = new NotificationChannel("quiteManagerMsg","הודעות מהמנהל - ללא צליל", NotificationManager.IMPORTANCE_LOW);
         manager.createNotificationChannel(channel);
-        channel = new NotificationChannel("managerMsg", "הודעות מהמנהל", NotificationManager.IMPORTANCE_DEFAULT);
+        channel = new NotificationChannel("managerMsg","הודעות מהמנהל", NotificationManager.IMPORTANCE_DEFAULT);
         manager.createNotificationChannel(channel);
-        channel = new NotificationChannel("other", "מחיקות וחסימות חשבון", NotificationManager.IMPORTANCE_DEFAULT);
+        channel = new NotificationChannel("other","מחיקות וחסימות חשבון", NotificationManager.IMPORTANCE_DEFAULT);
         manager.createNotificationChannel(channel);
     }
 
