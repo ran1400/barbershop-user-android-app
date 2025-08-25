@@ -18,7 +18,7 @@ public class ServerRequest
 {
     public static final String ERROR_RESPONSE = "requestError";
     private  Map map;
-    private String url = "https://ran-y.me/barbershop/commands/";
+    private String url = "https://ran-y.com/barbershop/commands/";
     private ServerResponseHandle responseHandle; // method that called when get response from the server
 
     public ServerRequest(ServerResponseHandle responseHandle)

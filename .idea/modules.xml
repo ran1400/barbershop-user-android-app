@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/barbershop.iml" filepath="$PROJECT_DIR$/.idea/modules/barbershop.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/barbershop.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/barbershop.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/barbershop.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/barbershop.app.androidTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/barbershop.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/barbershop.app.main.iml" />
