@@ -1,4 +1,4 @@
-App screenshot : https://ran-y.me/barbershop-screenshots
+App screenshot : https://ran-y.com/barbershop-screenshots
 
 The user sign in to the app by using his google account, in first sign in he need to enter name and phone number.
 
