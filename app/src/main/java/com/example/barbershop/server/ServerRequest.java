@@ -129,14 +129,14 @@ public class ServerRequest
 
     private void sendRequest(Context context)
     {
-        Log.d("sendHttpRequest",url + " " + map);
+        //Log.d("sendHttpRequest",url + " " + map);
         StringRequest sr = new StringRequest(1, url,
                 new Response.Listener<String>()
                 {
                     @Override
                     public void onResponse(String response)
                     {
-                        Log.d("sendHttpRequest","response : " + response);
+                        //Log.d("sendHttpRequest","response : " + response);
                         responseHandle.doWhenGetResponseFromTheServer(response);
                     }
                 }, new Response.ErrorListener()
@@ -145,7 +145,7 @@ public class ServerRequest
             public void onErrorResponse(VolleyError error)
             {
                 responseHandle.doWhenGetResponseFromTheServer(ServerRequest.ERROR_RESPONSE);
-                Log.d("sendHttpRequest","response : " + ERROR_RESPONSE);
+                //Log.d("sendHttpRequest","response : " + ERROR_RESPONSE);
             }
         })
         {
