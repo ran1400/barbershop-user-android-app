@@ -2,7 +2,6 @@ package com.example.barbershop.server;
 
 
 import android.content.Context;
-import android.util.Log;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
@@ -119,7 +118,7 @@ public class ServerRequest
     }
 
     public void removeUser(Context context)
-    {;
+    {
         url += "user/remove_user.php";
         map.put("userMail",DataHolderClass.userMail);
         map.put("userName",DataHolderClass.userName);
